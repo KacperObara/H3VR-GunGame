@@ -1,0 +1,4 @@
+Weapon pools:
+To make the weapon pool show up, the only thing You need is a json file. All the stuff like buttons to choose will be created automatically. 
+If You have the project ready, build it normally like any other map, and then just copy paste json files into the zip file containing the map. 
+These weapon pools will be available by default.

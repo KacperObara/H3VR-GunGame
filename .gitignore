@@ -85,6 +85,8 @@ AssetBundles/
 /[Aa]ssets/MeatKit/Cache.asset
 /[Aa]ssets/MeatKit/Cache.asset.meta
 
+!/[Pp]rojectSettings/TagManager.asset
+
 # These meta files are SUPER IMPORTANT. They NEED to be backed up because if you lose them and do a re-import all your scripts will be missing.
 !/[Aa]ssets/MeatKit/Managed/*.meta
 

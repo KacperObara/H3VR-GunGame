@@ -14,8 +14,6 @@ namespace GunGame.Scripts
 
         public Progression Progression;
 
-        public List<Transform> PlayerSpawners;
-
         private IEnumerator Start()
         {
             // Wait one frame so that everything is all setup
@@ -59,8 +57,8 @@ namespace GunGame.Scripts
 
         public void MovePlayerToRandomSpawn()
         {
-            int randomSpawn = Random.Range(0, PlayerSpawners.Count);
-            transform.position = PlayerSpawners[randomSpawn].position;
+            int randomSpawn = Random.Range(0, GameManager.Instance.PlayerSpawners.Count);
+            transform.position = GameManager.Instance.PlayerSpawners[randomSpawn].position;
             GM.CurrentMovementManager.TeleportToPoint(transform.position, true, transform.position + transform.forward);
         }
 

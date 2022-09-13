@@ -47,23 +47,23 @@ namespace GunGame.Scripts.Options
                 OptionChanged.Invoke();
         }
 
-        public void ArrowLeft10Clicked()
-        {
-            WeaponCount -= 20;
-
-            if (WeaponCount <= 1)
-                WeaponCount = 1;
-
-            if (OptionChanged != null)
-                OptionChanged.Invoke();
-        }
-
         public void ArrowRight10Clicked()
         {
             WeaponCount += 20;
 
             if (WeaponCount > GameSettings.CurrentPool.Guns.Count)
                 WeaponCount = GameSettings.CurrentPool.Guns.Count;
+
+            if (OptionChanged != null)
+                OptionChanged.Invoke();
+        }
+
+        public void ArrowLeft10Clicked()
+        {
+            WeaponCount -= 20;
+
+            if (WeaponCount <= 1)
+                WeaponCount = 1;
 
             if (OptionChanged != null)
                 OptionChanged.Invoke();

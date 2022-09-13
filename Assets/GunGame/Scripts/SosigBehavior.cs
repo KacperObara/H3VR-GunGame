@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FistVR;
+using GunGame.Scripts.Options;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,9 +13,17 @@ namespace GunGame.Scripts
 	public class SosigBehavior : MonoBehaviourSingleton<SosigBehavior>
 	{
 		public int MaxSosigCount = 8;
+		[HideInInspector] public int RealSosigCount;
 
-		[Header("Don't spawn sosigs too close to the player if possible")]
+		[Header("Don't spawn sosigs too close or too far from the player")]
 		public int IgnoredSpawnersCloseToPlayer = 2;
+		public int IgnoredSpawnersFarFromPlayer = 0;
+
+		public bool DespawnDistantSosigs = false;
+		public float MaxSosigDistanceFromPlayer = 0;
+
+		public float HearRangeMultiplier = 1f;
+		public float SightRangeMultiplier = 1f;
 
 		public List<Transform> Waypoints;
 		public List<CustomSosigSpawner> SosigSpawners;
@@ -31,7 +40,9 @@ namespace GunGame.Scripts
 
 		private void OnGameStarted()
 		{
-			for (int i = 0; i < MaxSosigCount; i++)
+			RealSosigCount = GameSettings.MaxSosigCount;
+
+			for (int i = 0; i < RealSosigCount; i++)
 			{
 				SpawnSosigRandomPlace();
 			}
@@ -41,7 +52,7 @@ namespace GunGame.Scripts
 
 		[HarmonyPatch(typeof(Sosig), "Start")]
 		[HarmonyPostfix]
-		private static void Postfix(Sosig __instance)
+		private static void SosigSpawned(Sosig __instance)
 		{
 			// I'm reducing bleed rate multiplier to avoid situations, when player shoots sosig and it dies sometime later, randomly changing player's weapon.
 			// But there is a problem with small weapons that just don't have enough damage to kill sosig by other means. That's why I'm increasing damage multiplier.
@@ -54,10 +65,16 @@ namespace GunGame.Scripts
 				__instance.Links[i].SetIntegrity(__instance.Links[i].m_integrity * .65f);
 			}
 
-			__instance.Links[0].DamMult = 6.5f;
-			__instance.Links[1].DamMult = 4.5f;
-			__instance.Links[2].DamMult = 3f;
-			__instance.Links[3].DamMult = 2f;
+			__instance.Links[0].DamMult = 13.5f;
+			__instance.Links[1].DamMult = 6f;
+			__instance.Links[2].DamMult = 5f;
+			__instance.Links[3].DamMult = 4f;
+
+			__instance.MaxHearingRange *= Instance.HearRangeMultiplier;
+			__instance.MaxSightRange *= Instance.SightRangeMultiplier;
+
+			if (Instance.DespawnDistantSosigs)
+				Instance.StartCoroutine(Instance.CheckSosigDistance(__instance));
 		}
 
 		private IEnumerator UpdateWaypoints()
@@ -86,20 +103,41 @@ namespace GunGame.Scripts
 			}
 		}
 
+		private IEnumerator CheckSosigDistance(Sosig sosig)
+		{
+			WaitForSeconds delay = new WaitForSeconds(6f);
+			while (sosig != null)
+			{
+				yield return delay;
+
+				if (Vector3.Distance(GM.CurrentPlayerBody.transform.position, sosig.transform.position) > MaxSosigDistanceFromPlayer)
+				{
+					if (Progression.DeadSosigs.Contains(sosig.GetInstanceID()))
+						break;
+
+					sosig.DeSpawnSosig();
+					Instance.SpawnSosigRandomPlace();
+
+					break;
+				}
+			}
+		}
+
 		public void SpawnSosigRandomPlace()
 		{
 			// ignore two closest spawners to the player
 			List<CustomSosigSpawner> availableSpawners = SosigSpawners
-				.OrderBy(spawner => Vector3.Magnitude(spawner.transform.position - GM.CurrentPlayerBody.transform.position))
+				.OrderBy(spawner => Vector3.Distance(spawner.transform.position, GM.CurrentPlayerBody.transform.position))
 				.ToList();
 
-			if (IgnoredSpawnersCloseToPlayer > availableSpawners.Count)
+			if (IgnoredSpawnersCloseToPlayer > availableSpawners.Count
+			|| IgnoredSpawnersFarFromPlayer > availableSpawners.Count
+			|| IgnoredSpawnersCloseToPlayer + IgnoredSpawnersFarFromPlayer > availableSpawners.Count)
 			{
 				Debug.LogError("Ignoring more spawners than available, aborting");
-				IgnoredSpawnersCloseToPlayer = 0;
 			}
 
-			int random = Random.Range(IgnoredSpawnersCloseToPlayer, availableSpawners.Count);
+			int random = Random.Range(IgnoredSpawnersCloseToPlayer, availableSpawners.Count - IgnoredSpawnersFarFromPlayer);
 
 			Sosig sosig = availableSpawners[random].Spawn();
 			Sosigs.Add(sosig);

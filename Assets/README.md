@@ -6,26 +6,45 @@ Welcome to the GunGame mode.
 
 As You get more kills, You will receive different weapons. Dying will result in a demotion to a previous weapon.
 
-[![kofi](https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0)](https://ko-fi.com/kodeman)  
-&emsp; &emsp; &emsp; &emsp;[KO-FI CAD$ version](https://ko-fi.com/kodeman2)
 
+[Project files](https://drive.google.com/file/d/1WI4XqNwe7Gxp757GhwCJTbxzXq_Gbm4x/view?usp=sharing) for making custom maps.    
+[Tutorial](https://docs.google.com/document/d/1QlgTxTHH6X-kRL-iym6_Q85BahqY2yBLZxHDJLtYkX4/edit) for making custom weapon pools.
+
+Project files should work with both new and existing projects. Let me know if I'm wrong.
+
+
+[![kofi](https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0)](https://ko-fi.com/kodeman)    
+&emsp; &emsp; &emsp; &emsp;[KO-FI CAD$ version](https://ko-fi.com/kodeman2)    
 
 ## Changelog
 
+### 7.0.0
+- You can disable auto loading if You prefer to do it yourself
+- You can enable healing on promotion
+- You can override map sosig cap if You want to face more/less enemies
+- Map got lighting rework thanks to Marcel
+- You can now shoot through and leave the end game area if You want to fight sosigs or something
+- Another sosig nerf so they are less frustrating with tiny calibers
+- Counter above head with how many guns are left
+- You can pause the game now if You find the lever for it.
+- Mags weird rotation fix
+- Some spawn customization for map makers
+- If the game can't spawn a new gun, it will try to skip it by promoting player further and will log error
+- Misc stuff
 
 ### 6.0.0
 - You can now choose quickbelt slot used for ammo
 - Fixed weapon pool duplication if You had more than one map using the same weapon pools
-- Upgraded weapons support
-- Buttons to increase/decrease weapons count by 20. Useful if You're using massive weapon pools like https://h3vr.thunderstore.io/package/HLin_Mods/GunGame_Progressions/ and still want to finish the game.
+- Upgraded weapon support
 - Tutorial in the project for making new maps
 
 ### 5.0.1
 - "Through time" weapon pool was fixed, thanks Idiot sandwich and ChadStevens for help with finding the problem  
 
 ### 5.0.0 - Weapon pools update
-- The gun game files are now open source if You want to create Your own map.
+- Sosigs nerfed
+- The gun game files are now [open source](https://drive.google.com/file/d/1WI4XqNwe7Gxp757GhwCJTbxzXq_Gbm4x/view?usp=sharing) if You want to create Your own map.
 - 2 new weapon pools added
-- Sosigs liked to flip out inside the center home, so I closed it for now, thanks "The F5 key" for notifing me
+- Sosigs liked to flip out inside the center home, so I closed it for now, thanks "The F5 key" for notifying me
 - Added support for many more weapon types, including revolvers and chamber only weapons like rocket launchers
-- Added support for custom weapon pools. If You want to create a weapon pool or know more, see the [Tutorial](https://docs.google.com/document/d/1QlgTxTHH6X-kRL-iym6_Q85BahqY2yBLZxHDJLtYkX4/edit)]
+- Added support for custom weapon pools. If You want to create a weapon pool or know more, see the [Tutorial](https://docs.google.com/document/d/1QlgTxTHH6X-kRL-iym6_Q85BahqY2yBLZxHDJLtYkX4/edit)

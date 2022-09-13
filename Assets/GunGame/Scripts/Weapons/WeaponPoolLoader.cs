@@ -83,7 +83,8 @@ namespace GunGame.Scripts.Weapons
                 _choices.Add(choice);
             }
 
-            WeaponPool startPool = _weaponPools.FirstOrDefault(x => x.Name == "Default Weapons");
+            //WeaponPool startPool = _weaponPools.FirstOrDefault(x => x.Name == "Default Weapons");
+            WeaponPool startPool = _weaponPools[0];
             GameSettings.ChangeCurrentPool(startPool);
 
             if (WeaponLoadedEvent != null)

@@ -17,6 +17,12 @@ namespace GunGame.Scripts
 		{
 			GM.CurrentMovementManager.TeleportToPoint(EndPos.position, true, transform.position + transform.forward);
 
+			// Move all spawners to the end pos. If the player dies after game ended, he will still be respawned at the end location
+			foreach (var spawner in GameManager.Instance.PlayerSpawners)
+			{
+				spawner.transform.position = EndPos.position;
+			}
+
 			KillsText.text = "Kills: " + GameManager.Instance.Kills;
 			DeathsText.text = "Deaths: " + GameManager.Instance.Deaths;
 

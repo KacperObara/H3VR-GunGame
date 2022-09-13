@@ -110,6 +110,8 @@ namespace GunGame.Scripts.Weapons
 				case ObjectType.MagazineToLoad:
 					_magazineToLoad = Instantiate(callback.Result, BufferSpawnPos.position + spawnOffset, BufferSpawnPos.rotation).GetComponent<FVRPhysicalObject>();
 					_magazineToLoad.gameObject.SetActive(true);
+					_magazineToLoad.UsesGravity = false;
+					_magazineToLoad.RootRigidbody.isKinematic = true;
 					break;
 				case ObjectType.MagazineForQuickbelt:
 					_magazineForQuickbelt = Instantiate(callback.Result, BufferSpawnPos.position + spawnOffset, BufferSpawnPos.rotation).GetComponent<FVRPhysicalObject>();

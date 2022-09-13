@@ -77,7 +77,7 @@ crashlytics-build.properties
 AssetBundles/
 
 # MeatKit stuffs
-!/[Aa]ssets/MeatKit/Managed/*
+/[Aa]ssets/MeatKit/Managed/*
 !/[Aa]ssets/MeatKit/Managed/BepInEx.dll
 !/[Aa]ssets/MeatKit/Managed/Sodalite.dll
 !/[Aa]ssets/MeatKit/Managed/Atlas.dll

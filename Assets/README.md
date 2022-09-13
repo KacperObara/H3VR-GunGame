@@ -6,12 +6,8 @@ Welcome to the GunGame mode.
 
 As You get more kills, You will receive different weapons. Dying will result in a demotion to a previous weapon.
 
-
-[Project files](https://drive.google.com/file/d/1WI4XqNwe7Gxp757GhwCJTbxzXq_Gbm4x/view?usp=sharing) for making custom maps.    
-[Tutorial](https://docs.google.com/document/d/1QlgTxTHH6X-kRL-iym6_Q85BahqY2yBLZxHDJLtYkX4/edit) for making custom weapon pools.
-
-Project files should work with both new and existing projects. Let me know if I'm wrong.
-
+[Tutorial for making maps](https://github.com/KacperObara/H3VR-GunGame/wiki/Map-making-Tutorial)
+[Tutorial for making weapon pools](https://docs.google.com/document/d/1QlgTxTHH6X-kRL-iym6_Q85BahqY2yBLZxHDJLtYkX4/edit)
 
 [![kofi](https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0)](https://ko-fi.com/kodeman)    
 &emsp; &emsp; &emsp; &emsp;[KO-FI CAD$ version](https://ko-fi.com/kodeman2)    
@@ -28,7 +24,7 @@ Project files should work with both new and existing projects. Let me know if I'
 - Counter above head with how many guns are left
 - You can pause the game now if You find the lever for it.
 - Mags weird rotation fix
-- Some spawn customization for map makers
+- Some improvements for map makers
 - If the game can't spawn a new gun, it will try to skip it by promoting player further and will log error
 - Misc stuff
 

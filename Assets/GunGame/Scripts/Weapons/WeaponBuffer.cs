@@ -36,7 +36,8 @@ namespace GunGame.Scripts.Weapons
 		// Get next Gun / MagazineToLoad / MagazineForQuickbelt, from buffer or spawn new one
 		public FVRPhysicalObject GetFromBuffer(ObjectType type, int index, bool demoted)
 		{
-			FVRPhysicalObject buffer = GetBufferObject(type);
+            //Debug.Log("Grabbing asset:" + GameSettings.CurrentPool.GetWeapon(index).ToString() + " of type: " + type.ToString());
+            FVRPhysicalObject buffer = GetBufferObject(type);
 			if (demoted)
 			{
 				if (buffer)
@@ -70,7 +71,7 @@ namespace GunGame.Scripts.Weapons
 
 		public void GenerateBuffer(int currentIndex)
 		{
-			if (currentIndex + 1 < GameSettings.CurrentPool.Guns.Count)
+			if (currentIndex + 1 < GameSettings.CurrentPool.GetWeaponCount())
 			{
 				StartCoroutine(SpawnAsync(ObjectType.Gun, GameSettings.CurrentPool.GetWeapon(currentIndex + 1)));
 				StartCoroutine(SpawnAsync(ObjectType.MagazineToLoad, GameSettings.CurrentPool.GetWeapon(currentIndex + 1)));
@@ -129,6 +130,8 @@ namespace GunGame.Scripts.Weapons
 				weaponString = gunData.GunName;
 			if (objectType == ObjectType.MagazineToLoad || objectType == ObjectType.MagazineForQuickbelt)
 				weaponString = gunData.MagName;
+			if (objectType == ObjectType.Extra)
+				weaponString = gunData.Extra;
 
 			FVRObject obj = null;
 			if (!IM.OD.TryGetValue(weaponString, out obj))
@@ -149,6 +152,7 @@ namespace GunGame.Scripts.Weapons
 	{
 		Gun = 0,
 		MagazineToLoad,
-		MagazineForQuickbelt
+		MagazineForQuickbelt,
+		Extra
 	}
 }

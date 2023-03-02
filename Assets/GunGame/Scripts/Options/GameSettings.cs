@@ -22,7 +22,7 @@ namespace GunGame.Scripts.Options
 
         public static int MaxSosigCount;
 
-        public static WeaponPool CurrentPool { get; private set; }
+        public static WeaponPoolInterface CurrentPool { get; private set; }
 
         private void Start()
         {
@@ -92,7 +92,7 @@ namespace GunGame.Scripts.Options
                 SettingsChanged.Invoke();
         }
 
-        public static void ChangeCurrentPool(WeaponPool newPool)
+        public static void ChangeCurrentPool(WeaponPoolInterface newPool)
         {
             CurrentPool = newPool;
             CurrentPool.Initialize();

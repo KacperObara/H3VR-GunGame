@@ -40,8 +40,8 @@ namespace GunGame.Scripts.Options
         {
             WeaponCount++;
 
-            if (WeaponCount > GameSettings.CurrentPool.Guns.Count)
-                WeaponCount = GameSettings.CurrentPool.Guns.Count;
+            if (WeaponCount > GameSettings.CurrentPool.GetWeaponCount())
+                WeaponCount = GameSettings.CurrentPool.GetWeaponCount();
 
             if (OptionChanged != null)
                 OptionChanged.Invoke();
@@ -51,8 +51,8 @@ namespace GunGame.Scripts.Options
         {
             WeaponCount += 20;
 
-            if (WeaponCount > GameSettings.CurrentPool.Guns.Count)
-                WeaponCount = GameSettings.CurrentPool.Guns.Count;
+            if (WeaponCount > GameSettings.CurrentPool.GetWeaponCount())
+                WeaponCount = GameSettings.CurrentPool.GetWeaponCount();
 
             if (OptionChanged != null)
                 OptionChanged.Invoke();
@@ -71,7 +71,7 @@ namespace GunGame.Scripts.Options
 
         public void ResetClicked()
         {
-            WeaponCount = GameSettings.CurrentPool.Guns.Count;
+            WeaponCount = GameSettings.CurrentPool.GetWeaponCount();
 
             if (OptionChanged != null)
                 OptionChanged.Invoke();

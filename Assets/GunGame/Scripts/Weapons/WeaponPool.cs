@@ -13,10 +13,11 @@ namespace GunGame.Scripts.Weapons
         public string Name;
         public string Description;
         public OrderType OrderType;
-        public SosigEnemyID EnemyType = SosigEnemyID.M_Swat_Scout;
+        public String EnemyType = "M_Swat_Scout";
         public int CurrentIndex;
 
         public List<GunData> Guns = new List<GunData>();
+        [NonSerialized] public List<EnemyData> Enemies = new List<EnemyData>();
 
         // Stupid workaround for the GunData objects breaking for some reason when loading inside the game
         [HideInInspector] public List<string> GunNames = new List<string>();
@@ -70,9 +71,7 @@ namespace GunGame.Scripts.Weapons
 
         public List<EnemyData> GetEnemies()
         {
-            List<EnemyData> SimpleList = new List<EnemyData>();
-            SimpleList.Add(new EnemyData(EnemyType, 1));
-            return SimpleList;
+            return Enemies;
         }
 
         public bool IncrementProgress()
@@ -97,6 +96,7 @@ namespace GunGame.Scripts.Weapons
         public void Initialize()
         {
             SetGunOrder();
+            SeedEnemyList();
             //no longer necessary, with new enemy control method
             //SetSpawners();
             CurrentIndex = 0;
@@ -116,9 +116,15 @@ namespace GunGame.Scripts.Weapons
             }
         }
 
+        private void SeedEnemyList()
+        {
+            Enemies.Add(new EnemyData(EnemyType, 1));
+        }
+
         //DEPRECATED
         private void SetSpawners()
         {
+            /*
             SosigEnemyID enemyID = SosigEnemyID.M_MercWiener_Scout;
             try
             {
@@ -133,6 +139,7 @@ namespace GunGame.Scripts.Weapons
             {
                 //sosigSpawner.SosigType = enemyID;
             }
+            */
         }
 
     }

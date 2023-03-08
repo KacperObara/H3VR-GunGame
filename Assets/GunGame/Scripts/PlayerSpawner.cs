@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FistVR;
+using GunGame.Scripts.Options;
 using HarmonyLib;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,10 +30,10 @@ namespace GunGame.Scripts
             Progression.Instance.KillsWithCurrentWeapon = 0;
             Progression.Instance.CurrentTier = 0;
             yield return new WaitForSeconds(3f);
-            if (Progression.Instance.ProgressionType == KillProgressionType.Tiers)
+            if (Progression.Instance.ProgressionType == KillProgressionType.Tiers || GameSettings.AlwaysResetSosigs)
             {
-                //for tiered progression we want to reset the sosigs to match the tier
-                SosigBehavior.Instance.ClearSosigs();
+                //for tiered progression we want to reset the sosigs to match the tier (or if we selected the option)
+                StartCoroutine(SosigBehavior.Instance.ClearSosigs());
             }
             Progression.Instance.Demote();
             GM.CurrentPlayerBody.ActivatePower(PowerupType.Invincibility, PowerUpIntensity.High, PowerUpDuration.VeryShort,

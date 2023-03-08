@@ -154,7 +154,7 @@ namespace GunGame.Scripts
             Sosigs.Remove(sosig);
         }
 
-		public void ClearSosigs()
+		public IEnumerator ClearSosigs()
 		{
 			List<Sosig> TempSosigsList = new List<Sosig>();
             foreach (Sosig sosig in Sosigs.Keys)

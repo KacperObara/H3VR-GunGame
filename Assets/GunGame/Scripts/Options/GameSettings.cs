@@ -13,6 +13,7 @@ namespace GunGame.Scripts.Options
         public static bool DisabledAutoLoading;
         public static bool AlwaysChamberRounds; // Unused for now
         public static bool HealOnPromotion;
+        public static bool AlwaysResetSosigs; // Unused for now
 
         [SerializeField] private Image DisabledAutoLoadingImage;
         [SerializeField] private Image AlwaysChamberRoundsImage;
@@ -29,6 +30,7 @@ namespace GunGame.Scripts.Options
             DisabledAutoLoading = false;
             AlwaysChamberRounds = false;
             HealOnPromotion = false;
+            AlwaysResetSosigs = false;
 
             ResetMaxSosigCount();
         }

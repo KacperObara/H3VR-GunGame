@@ -165,7 +165,7 @@ namespace GunGame.Scripts.Weapons
         private List<string> GetWeaponPoolLocations()
         {
             string pathToPlugins = Paths.PluginPath;
-            Debug.Log(pathToPlugins);
+            //Debug.Log(pathToPlugins);
             List<string> list = Directory.GetFiles(pathToPlugins, "GunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
             return list;
         }

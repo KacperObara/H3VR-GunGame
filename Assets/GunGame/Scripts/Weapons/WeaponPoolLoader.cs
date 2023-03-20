@@ -167,6 +167,10 @@ namespace GunGame.Scripts.Weapons
             string pathToPlugins = Paths.PluginPath;
             //Debug.Log(pathToPlugins);
             List<string> list = Directory.GetFiles(pathToPlugins, "GunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
+            List<string> templist = Directory.GetFiles(pathToPlugins, "AdvancedGunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
+            print("List: " + list.ToString());
+            print("TempList: " + templist.ToString());
+            list.AddRange(templist);
             return list;
         }
     }

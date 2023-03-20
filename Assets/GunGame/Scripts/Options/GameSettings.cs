@@ -98,6 +98,7 @@ namespace GunGame.Scripts.Options
         {
             CurrentPool = newPool;
             CurrentPool.Initialize();
+            Progression.Instance.ProgressionType = CurrentPool.GetProgressionType();
 
             if (WeaponPoolChanged != null)
                 WeaponPoolChanged.Invoke();

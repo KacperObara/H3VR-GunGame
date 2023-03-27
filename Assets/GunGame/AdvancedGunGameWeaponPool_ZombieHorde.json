@@ -1,0 +1,188 @@
+{
+  "WeaponPoolType":  "Advanced",
+  "Description": "Generic Zombie Survival",
+  "EnemyProgressionType": 0,
+  "Enemies": [
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_Rot",
+      "Value": 8
+    },
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_Floater",
+      "Value": 8
+    },
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_Beefkicker",
+      "Value": 3
+    },
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_HamFister",
+      "Value": 3
+    },
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_Pig",
+      "Value": 5
+    },
+    {
+	  "EnemyName": 0,
+      "EnemyNameString": "RW_Lemonhead",
+      "Value": 1
+    }
+  ],
+  "Guns": [
+	{
+      "GunName": "MB500Chopped",
+      "MagName": "",
+      "MagNames": [ "12GaugeShell00Buckshot", "12GaugeShellSlug", "12GaugeShellDragonsBreath", "12GaugeShellTripleHit"],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+    {
+      "GunName": "Detective Special 38",
+      "MagName": "",
+      "MagNames": [ "38SpecialCartridgeFMJ", "38SpecialCartridgeJHP"],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "DoubleBarrel1882",
+      "MagName": "",
+      "MagNames": [ "12GaugeShell00Buckshot", "12GaugeShellSlug", "12GaugeShellDragonsBreath", "12GaugeShellTripleHit" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "Explorer22",
+      "MagName": "",
+      "MagNames": [ "MagazineExplorer22" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "M1911",
+      "MagName": "",
+      "MagNames": [ "MagazineM1911OG", "MagazineM1911", "MagazineM1911Tactical"],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "G17",
+      "MagName": "",
+      "MagNames": [ "MagazineG17Standard", "MagazineG17Custom", "MagazineG19_33rnd" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "M92fs",
+      "MagName": "",
+      "MagNames": [ "MagazineCX4", "MagazineM9A3" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "AKM",
+      "MagName": "",
+      "MagNames": [ "MagazineAKM", "MagazineAKMTactical20rnd" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "Fal",
+      "MagName": "",
+      "MagNames": [ "MagazineFal10rnd", "MagazineFal20rnd" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "Sako85",
+      "MagName": "",
+      "MagNames": [ "MagazineSako85" ],
+      "CategoryID": 0,
+      "Extra": "Scope3-12x"
+    },
+	{
+      "GunName": "M4A1Classic",
+      "MagName": "",
+      "MagNames": [ "MagazineStanag20rnd", "MagazineStanag1", "MagazineStanag10rnd" ],
+      "CategoryID": 0,
+      "Extra": "ReflexGamepointRDS"
+    },
+	{
+      "GunName": "UMP45",
+      "MagName": "",
+      "MagNames": [ "MagazineUMP45" ],
+      "CategoryID": 0,
+      "Extra": "ReflexMRS"
+    },
+	{
+      "GunName": "Mac10",
+      "MagName": "",
+      "MagNames": [ "MagazineMac10" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "Mosin91_30",
+      "MagName": "",
+      "MagNames": [ "762x54mmRCartridgeFMJ", "762x54mmRStripperClip" ],
+      "CategoryID": 0,
+      "Extra": "ScopeMosinPU"
+    },
+	{
+      "GunName": "K98k",
+      "MagName": "",
+      "MagNames": [ "792x57mmCartridgeFMJ", "792x57mmStripperClip" ],
+      "CategoryID": 0,
+      "Extra": "ScopeK98kZielacht"
+    },
+	{
+      "GunName": "M79GrenadeLauncher",
+      "MagName": "",
+      "MagNames": [ "Cartridge_40x46Grenade_M381", "Cartridge_40x46Grenade_M397"  ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "SPAS12",
+      "MagName": "",
+      "MagNames": [ "12GaugeShell00Buckshot", "12GaugeShellSlug", "12GaugeShellDragonsBreath", "12GaugeShellTripleHit" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "Hammerless520",
+      "MagName": "",
+      "MagNames": [ "12GaugeShell00Buckshot", "12GaugeShellSlug", "12GaugeShellDragonsBreath", "12GaugeShellTripleHit" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "M14",
+      "MagName": "",
+      "MagNames": [ "MagazineM1420rnd", "MagazineM1430rnd" ],
+      "CategoryID": 0,
+      "Extra": "ScopeM145"
+    },
+	{
+      "GunName": "Python",
+      "MagName": "",
+      "MagNames": [ "357MagnumCartridgeFMJ", "357MagnumCartridgeJHP" ],
+      "CategoryID": 0,
+      "Extra": ""
+    },
+	{
+      "GunName": "1873Rifle",
+      "MagName": "",
+      "MagNames": [ "45LongColtCartridgeSP", "45LongColtCartridgeTracer" ],
+      "CategoryID": 0,
+      "Extra": ""
+    }  	
+  ],
+  "Name": "Zombie Horde",
+  "OrderType": 2
+}

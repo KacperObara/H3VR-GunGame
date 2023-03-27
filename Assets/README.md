@@ -14,7 +14,23 @@ As You get more kills, You will receive different weapons. Dying will result in 
 
 ## Changelog
 
-### 7.0.0
+### 1.0.0 Advanced Weapon Pool Update
+Update made solely by Dagon-R.
+Advanced weapon pool allows for:
+- Multiple mag types per weapon
+- Extra attachment slot, no more weapons without sights
+- Support for multiple sosig types at once
+- 3 more available progression types (See tutorial for details)
+# Important - Advanced weapon pools will show up only in updated maps.
+
+
+### 0.7.2
+- Additional checks for edge cases with some weapons  
+
+### 0.7.1
+- Possible fix for rare situation, where weapon fails to spawn and sosigs remain alive with severed head  
+
+### 0.7.0
 - You can disable auto loading if You prefer to do it yourself
 - You can enable healing on promotion
 - You can override map sosig cap if You want to face more/less enemies
@@ -28,16 +44,16 @@ As You get more kills, You will receive different weapons. Dying will result in 
 - If the game can't spawn a new gun, it will try to skip it by promoting player further and will log error
 - Misc stuff
 
-### 6.0.0
+### 0.6.0
 - You can now choose quickbelt slot used for ammo
 - Fixed weapon pool duplication if You had more than one map using the same weapon pools
 - Upgraded weapon support
 - Tutorial in the project for making new maps
 
-### 5.0.1
+### 0.5.1
 - "Through time" weapon pool was fixed, thanks Idiot sandwich and ChadStevens for help with finding the problem  
 
-### 5.0.0 - Weapon pools update
+### 0.5.0 - Weapon pools update
 - Sosigs nerfed
 - The gun game files are now [open source](https://drive.google.com/file/d/1WI4XqNwe7Gxp757GhwCJTbxzXq_Gbm4x/view?usp=sharing) if You want to create Your own map.
 - 2 new weapon pools added

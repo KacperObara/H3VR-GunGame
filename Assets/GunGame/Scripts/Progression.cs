@@ -188,7 +188,14 @@ namespace GunGame.Scripts
             // If ammo is a magazine, then simply load it into the gun
             if (ammo as FVRFireArmMagazine != null)
             {
-                ((FVRFireArmMagazine)ammo).Load(weapon as FVRFireArm);
+                try
+                {
+                    ((FVRFireArmMagazine)ammo).Load(weapon as FVRFireArm);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Weapon failed to load magazine for gun " + weapon.ObjectWrapper.DisplayName + " with magazine " + ammo.ObjectWrapper.DisplayName);
+                }
             }
             // If the weapon is a Revolver, load the ammo into the cylinder
             else if (weapon.GetComponentInChildren<RevolverCylinder>() && ammo as Speedloader != null)
@@ -199,19 +206,25 @@ namespace GunGame.Scripts
             // It could possibly load the chamber for every weapon, but I want Player to load it manually for now.
             else if (GameSettings.AlwaysChamberRounds || (ammo as FVRFireArmMagazine == null && weapon.GetComponentInChildren<FVRFireArmMagazine>() == null && weapon as FVRFireArm != null))
             {
-                List<FVRFireArmChamber> chambers = weapon.GetComponent<FVRFireArm>().GetChambers();
-                foreach (var chamber in chambers)
+                try
                 {
-                    FVRFireArmRound round = _weaponBuffer.SpawnImmediate(ObjectType.MagazineToLoad, GameSettings.CurrentPool.GetWeapon(CurrentWeaponId)).GetComponent<FVRFireArmRound>();
-                    chamber.SetRound(round);
-                }
+                    List<FVRFireArmChamber> chambers = weapon.GetComponent<FVRFireArm>().GetChambers();
+                    foreach (var chamber in chambers)
+                    {
+                        FVRFireArmRound round = _weaponBuffer.SpawnImmediate(ObjectType.MagazineToLoad, GameSettings.CurrentPool.GetWeapon(CurrentWeaponId)).GetComponent<FVRFireArmRound>();
+                        chamber.SetRound(round);
+                    }
 
-                BreakActionWeapon breakActionWeapon = weapon.GetComponentInChildren<BreakActionWeapon>();
-                if (breakActionWeapon != null)
+                    BreakActionWeapon breakActionWeapon = weapon.GetComponentInChildren<BreakActionWeapon>();
+                    if (breakActionWeapon != null)
+                    {
+                        breakActionWeapon.CockAllHammers();
+                    }
+                }
+                catch (Exception e)
                 {
-                    breakActionWeapon.CockAllHammers();
+                    Debug.LogWarning("Error while trying to load gun chambers manually for a gun: " + weapon.name + " and ammo: " + ammo.name);
                 }
-
                 //weapon.GetComponentInChildren<Handgun>().CockHammer(false);
             }
 

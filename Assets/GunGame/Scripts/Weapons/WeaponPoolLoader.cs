@@ -64,7 +64,7 @@ namespace GunGame.Scripts.Weapons
                 Debug.LogError("No weapon pools found!");
                 return;
             }
-
+            
             for (int i = 0; i < _loadedWeaponPoolsLocations.Count; i++)
             {
                 WeaponPoolInterface newWeaponPool = LoadWeaponPool(_loadedWeaponPoolsLocations[i]);
@@ -165,11 +165,8 @@ namespace GunGame.Scripts.Weapons
         private List<string> GetWeaponPoolLocations()
         {
             string pathToPlugins = Paths.PluginPath;
-            //Debug.Log(pathToPlugins);
             List<string> list = Directory.GetFiles(pathToPlugins, "GunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
             List<string> templist = Directory.GetFiles(pathToPlugins, "AdvancedGunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
-            print("List: " + list.ToString());
-            print("TempList: " + templist.ToString());
             list.AddRange(templist);
             return list;
         }

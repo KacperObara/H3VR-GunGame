@@ -9,12 +9,12 @@ namespace GunGame.Scripts.Weapons
 		public Text TitleText;
 		public Button Button;
 
-		private WeaponPool _weaponPool;
+		private WeaponPoolInterface _weaponPool;
 
-		public void Initialize(WeaponPool weaponPool)
+		public void Initialize(WeaponPoolInterface weaponPool)
 		{
 			_weaponPool = weaponPool;
-			TitleText.text = _weaponPool.Name;
+			TitleText.text = _weaponPool.GetName();
 			Button.onClick.AddListener(OnClick);
 		}
 

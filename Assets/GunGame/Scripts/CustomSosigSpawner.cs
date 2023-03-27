@@ -6,11 +6,11 @@ namespace GunGame.Scripts
 {
 	public class CustomSosigSpawner : MonoBehaviour
 	{
-		public SosigEnemyID SosigType;
+		//public SosigEnemyID SosigType;
 		public Sosig.SosigOrder SpawnState;
 		public int IFF;
 
-		public Sosig Spawn()
+		public SpawnedSosigInfo Spawn(SosigEnemyID SosigType)
 		{
 			SosigAPI.SpawnOptions spawnOptions = new SosigAPI.SpawnOptions()
 			{
@@ -23,11 +23,15 @@ namespace GunGame.Scripts
 				SosigTargetRotation = this.transform.eulerAngles
 			};
 
-			SosigEnemyTemplate template = ManagerSingleton<IM>.Instance.odicSosigObjsByID[this.SosigType];
+			SosigEnemyTemplate template = ManagerSingleton<IM>.Instance.odicSosigObjsByID[SosigType];
 
 			Sosig newSosig = SosigAPI.Spawn(template, spawnOptions, this.transform.position, this.transform.rotation);
 
-			return newSosig;
+			//packaging the info together to allow for matching sosigs with their spawn type
+			SpawnedSosigInfo output;
+			output.SosigType = SosigType;
+			output.SpawnedSosig = newSosig;
+			return output;
 		}
 
 		private void OnDrawGizmos()
@@ -36,5 +40,11 @@ namespace GunGame.Scripts
 			Gizmos.DrawSphere(this.transform.position, 0.1f);
 			Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 0.25f);
 		}
+	}
+
+	public struct SpawnedSosigInfo
+	{
+		public SosigEnemyID SosigType;
+		public Sosig SpawnedSosig;
 	}
 }

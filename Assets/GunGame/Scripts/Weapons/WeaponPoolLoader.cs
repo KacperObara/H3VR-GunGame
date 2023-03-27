@@ -20,7 +20,7 @@ namespace GunGame.Scripts.Weapons
         public List<WeaponPool> DebugWeaponPools;
 
         private List<string> _loadedWeaponPoolsLocations = new List<string>();
-        private List<WeaponPool> _weaponPools = new List<WeaponPool>();
+        private List<WeaponPoolInterface> _weaponPools = new List<WeaponPoolInterface>();
 
         // unused for now
         private List<PoolChoice> _choices = new List<PoolChoice>();
@@ -57,7 +57,7 @@ namespace GunGame.Scripts.Weapons
 
             _loadedWeaponPoolsLocations = GetWeaponPoolLocations();
 
-            _weaponPools = new List<WeaponPool>();
+            _weaponPools = new List<WeaponPoolInterface>();
 
             if (_loadedWeaponPoolsLocations.Count == 0)
             {
@@ -67,12 +67,16 @@ namespace GunGame.Scripts.Weapons
 
             for (int i = 0; i < _loadedWeaponPoolsLocations.Count; i++)
             {
-                WeaponPool newWeaponPool = LoadWeaponPool(_loadedWeaponPoolsLocations[i]);
+                WeaponPoolInterface newWeaponPool = LoadWeaponPool(_loadedWeaponPoolsLocations[i]);
 
                 if (newWeaponPool != null)
                 {
                     _weaponPools.Add(newWeaponPool);
-                    Debug.Log("Weapon pool loaded with name: " + newWeaponPool.Name + " and count: " + newWeaponPool.GunNames.Count);
+                    Debug.Log("Weapon pool loaded with name: " + newWeaponPool.GetName() + " and count: " + newWeaponPool.GetWeaponCount());
+                }
+                else
+                {
+                    Debug.Log("Failed to load Weapon pool at location: " + _loadedWeaponPoolsLocations[i]);
                 }
             }
 
@@ -84,43 +88,68 @@ namespace GunGame.Scripts.Weapons
             }
 
             //WeaponPool startPool = _weaponPools.FirstOrDefault(x => x.Name == "Default Weapons");
-            WeaponPool startPool = _weaponPools[0];
+            WeaponPoolInterface startPool = _weaponPools[0];
             GameSettings.ChangeCurrentPool(startPool);
 
             if (WeaponLoadedEvent != null)
                 WeaponLoadedEvent.Invoke();
         }
 
-        public WeaponPool LoadWeaponPool(string path)
+        public WeaponPoolInterface LoadWeaponPool(string path)
         {
             using (StreamReader stream = new StreamReader(path))
             {
                 string json = stream.ReadToEnd();
-                WeaponPool newWeaponPool = JsonUtility.FromJson<WeaponPool>(json);
-
-                if (_weaponPools.FirstOrDefault(x => x.Name == newWeaponPool.Name) != null)
+                //we need to check if the file has the optional WeaponPoolType value, which means it's an advanced pool (ooh fancy)
+                WeaponPoolAdvanced newWeaponPoolAdvanced = null;
+                try
                 {
-                    // weapon pool already exists, so don't load it again
+                    newWeaponPoolAdvanced = JsonUtility.FromJson<WeaponPoolAdvanced>(json);
+                }
+                catch(Exception e)
+                {
+                    Debug.Log(e.Message);
                     return null;
                 }
-
-                // I have to rebuild the list because game hates me and clears it every time I load a weapon pool.
-                // doesn't happen in the editor, but it does happen in the game.
-                newWeaponPool.Guns.Clear();
-
-                for (int i = 0; i < newWeaponPool.GunNames.Count; i++)
+                if (newWeaponPoolAdvanced.WeaponPoolType == "Advanced")
                 {
-                    GunData gunData = new GunData()
+                    if (_weaponPools.FirstOrDefault(x => x.GetName() == newWeaponPoolAdvanced.GetName()) != null)
                     {
-                        GunName = newWeaponPool.GunNames[i],
-                        MagName = newWeaponPool.MagNames[i],
-                        CategoryID = newWeaponPool.CategoryIDs[i]
-                    };
-
-                    newWeaponPool.Guns.Add(gunData);
+                        // weapon pool already exists, so don't load it again
+                        return null;
+                    }
+                    Debug.Log("Loaded advanced weapon pool: " + newWeaponPoolAdvanced.GetName());
+                    return newWeaponPoolAdvanced;
                 }
+                //Original Weapon Pool
+                else
+                {
+                    WeaponPool newWeaponPool = JsonUtility.FromJson<WeaponPool>(json);
 
-                return newWeaponPool;
+                    if (_weaponPools.FirstOrDefault(x => x.GetName() == newWeaponPool.GetName()) != null)
+                    {
+                        // weapon pool already exists, so don't load it again
+                        return null;
+                    }
+
+                    // I have to rebuild the list because game hates me and clears it every time I load a weapon pool.
+                    // doesn't happen in the editor, but it does happen in the game.
+                    newWeaponPool.Guns.Clear();
+
+                    for (int i = 0; i < newWeaponPool.GunNames.Count; i++)
+                    {
+                        GunData gunData = new GunData()
+                        {
+                            GunName = newWeaponPool.GunNames[i],
+                            MagName = newWeaponPool.MagNames[i],
+                            CategoryID = newWeaponPool.CategoryIDs[i]
+                        };
+
+                        newWeaponPool.Guns.Add(gunData);
+                    }
+                    Debug.Log("Loaded basic weapon pool: " + newWeaponPoolAdvanced.GetName());
+                    return newWeaponPool;
+                }
             }
         }
 
@@ -136,7 +165,12 @@ namespace GunGame.Scripts.Weapons
         private List<string> GetWeaponPoolLocations()
         {
             string pathToPlugins = Paths.PluginPath;
+            //Debug.Log(pathToPlugins);
             List<string> list = Directory.GetFiles(pathToPlugins, "GunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
+            List<string> templist = Directory.GetFiles(pathToPlugins, "AdvancedGunGameWeaponPool*.json", SearchOption.AllDirectories).ToList();
+            print("List: " + list.ToString());
+            print("TempList: " + templist.ToString());
+            list.AddRange(templist);
             return list;
         }
     }

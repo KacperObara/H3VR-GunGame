@@ -19,7 +19,7 @@ public class GunsLeftUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        int weaponCount = Mathf.Min(GameSettings.CurrentPool.Guns.Count, WeaponCountOption.WeaponCount);
+        int weaponCount = Mathf.Min(GameSettings.CurrentPool.GetWeaponCount(), WeaponCountOption.WeaponCount);
         int currentWeaponId = Progression.Instance.CurrentWeaponId + 1;
 
         int gunsLeft = weaponCount - currentWeaponId;

@@ -15,8 +15,8 @@ namespace GunGame.Scripts.Options
 
 		private void OnSettingsChanged()
 		{
-			TitleText.text = GameSettings.CurrentPool.Name;
-			DescriptionText.text = GameSettings.CurrentPool.Description;
+			TitleText.text = GameSettings.CurrentPool.GetName();
+			DescriptionText.text = GameSettings.CurrentPool.GetDescription();
 		}
 
 		private void OnDestroy()

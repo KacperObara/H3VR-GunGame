@@ -13,6 +13,7 @@ namespace GunGame.Scripts.Options
         public static bool DisabledAutoLoading;
         public static bool AlwaysChamberRounds; // Unused for now
         public static bool HealOnPromotion;
+        public static bool AlwaysResetSosigs; // Unused for now
 
         [SerializeField] private Image DisabledAutoLoadingImage;
         [SerializeField] private Image AlwaysChamberRoundsImage;
@@ -22,13 +23,14 @@ namespace GunGame.Scripts.Options
 
         public static int MaxSosigCount;
 
-        public static WeaponPool CurrentPool { get; private set; }
+        public static WeaponPoolInterface CurrentPool { get; private set; }
 
         private void Start()
         {
             DisabledAutoLoading = false;
             AlwaysChamberRounds = false;
             HealOnPromotion = false;
+            AlwaysResetSosigs = false;
 
             ResetMaxSosigCount();
         }
@@ -92,10 +94,11 @@ namespace GunGame.Scripts.Options
                 SettingsChanged.Invoke();
         }
 
-        public static void ChangeCurrentPool(WeaponPool newPool)
+        public static void ChangeCurrentPool(WeaponPoolInterface newPool)
         {
             CurrentPool = newPool;
             CurrentPool.Initialize();
+            Progression.Instance.ProgressionType = CurrentPool.GetProgressionType();
 
             if (WeaponPoolChanged != null)
                 WeaponPoolChanged.Invoke();

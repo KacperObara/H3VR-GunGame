@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FistVR;
 using GunGame.Scripts.Options;
+using GunGame.Scripts.Weapons;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -28,23 +29,25 @@ namespace GunGame.Scripts
 		public List<Transform> Waypoints;
 		public List<CustomSosigSpawner> SosigSpawners;
 
-		[HideInInspector] public List<Sosig> Sosigs;
+		[HideInInspector] public Dictionary<Sosig, SosigEnemyID> Sosigs;
 
 		public override void Awake()
 		{
 			base.Awake();
 
-			Sosigs = new List<Sosig>();
+			Sosigs = new Dictionary<Sosig, SosigEnemyID>();
 			GameManager.GameStartedEvent += OnGameStarted;
 		}
 
 		private void OnGameStarted()
 		{
-			RealSosigCount = GameSettings.MaxSosigCount;
+            Progression.Instance.InitEnemyProgression();
+            RealSosigCount = GameSettings.MaxSosigCount;
 
 			for (int i = 0; i < RealSosigCount; i++)
 			{
-				SpawnSosigRandomPlace();
+				//grab the next sosig type and spawn it
+				SpawnSosigRandomPlace(Progression.GetNextSosigType());
 			}
 
 			StartCoroutine(UpdateWaypoints());
@@ -84,19 +87,18 @@ namespace GunGame.Scripts
 				for (int i = 0; i < Sosigs.Count; i++)
 				{
 					if (i < 0 || i >= Sosigs.Count)
-						continue;
-
-					// TODO quick temporary cleanup
-					if (Sosigs[i] == null)
 					{
-						Sosigs.RemoveAt(i);
-						--i;
-						if (i < 0)
-							continue;
+						continue;
+					}
+					Sosig sosigdata = Sosigs.ElementAt(i).Key;
+					//TODO quick temporary cleanup
+					if (sosigdata == null)
+					{
+						continue;
 					}
 
-					Sosigs[i].SetCurrentOrder(Sosig.SosigOrder.Assault);
-					Sosigs[i].CommandAssaultPoint(Waypoints[Random.Range(0, Waypoints.Count)].position);
+                    sosigdata.SetCurrentOrder(Sosig.SosigOrder.Assault);
+                    sosigdata.CommandAssaultPoint(Waypoints[Random.Range(0, Waypoints.Count)].position);
 				}
 
 				yield return new WaitForSeconds(Random.Range(12, 25));
@@ -115,15 +117,19 @@ namespace GunGame.Scripts
 					if (Progression.DeadSosigs.Contains(sosig.GetInstanceID()))
 						break;
 
+					//grab sosig's type, then remove from list and despawn
+					SosigEnemyID sosigtype = Sosigs[sosig];
+					Sosigs.Remove(sosig);
 					sosig.DeSpawnSosig();
-					Instance.SpawnSosigRandomPlace();
+					//spawn new instance of same type of sosig
+					Instance.SpawnSosigRandomPlace(sosigtype);
 
 					break;
 				}
 			}
 		}
 
-		public void SpawnSosigRandomPlace()
+		public void SpawnSosigRandomPlace(SosigEnemyID sosigtype)
 		{
 			// ignore two closest spawners to the player
 			List<CustomSosigSpawner> availableSpawners = SosigSpawners
@@ -139,8 +145,31 @@ namespace GunGame.Scripts
 
 			int random = Random.Range(IgnoredSpawnersCloseToPlayer, availableSpawners.Count - IgnoredSpawnersFarFromPlayer);
 
-			Sosig sosig = availableSpawners[random].Spawn();
-			Sosigs.Add(sosig);
+            SpawnedSosigInfo sosigdata = availableSpawners[random].Spawn(sosigtype);
+			Sosigs.Add(sosigdata.SpawnedSosig, sosigdata.SosigType);
+		}
+
+		public void OnSosigKilled(Sosig sosig)
+		{
+            Sosigs.Remove(sosig);
+        }
+
+		public IEnumerator ClearSosigs()
+		{
+			List<Sosig> TempSosigsList = new List<Sosig>();
+            foreach (Sosig sosig in Sosigs.Keys)
+			{
+				TempSosigsList.Add(sosig);
+			}
+            foreach (Sosig sosig in TempSosigsList)
+			{
+				Sosigs.Remove(sosig);
+                sosig.DeSpawnSosig();
+				SosigEnemyID sosigType = Progression.GetNextSosigType();
+				//Add a delay to hopefully avoid clipping
+                yield return new WaitForSeconds(1f);
+                Instance.SpawnSosigRandomPlace(sosigType);
+            }
 		}
 
 		private void OnDestroy()
